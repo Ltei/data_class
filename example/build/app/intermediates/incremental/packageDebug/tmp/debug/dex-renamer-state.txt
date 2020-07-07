@@ -1,0 +1,4 @@
+#Sun Mar 01 02:48:47 CET 2020
+base.0=C\:\\Home\\Workspaces\\LteiUtils\\FlutterLibs\\model_builder\\example\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

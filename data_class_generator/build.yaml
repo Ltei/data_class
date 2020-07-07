@@ -1,0 +1,18 @@
+targets:
+  $default:
+    builders:
+      data_class_generator:
+        enabled: true
+
+builders:
+  data_class:
+    target: ":data_class_generator"
+    import: "package:data_class_generator/builder.dart"
+    # The builder function name, which gets called on build/watch
+    builder_factories: ["dataClass"]
+    # The 'partId' argument to 'SharedPartBuilder' is 'data_class'
+    build_extensions: {".dart": [".data_class.g.part"]}
+
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
