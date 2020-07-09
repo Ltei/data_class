@@ -37,7 +37,7 @@ class ClassElementInfo {
         constructor = classElement.constructors[0];
       } else {
 //        throw Exception("Couldn't determine primary constructor for class ${classElement.name}.");
-        constructor = classElement.constructors[0]; // TODO
+        constructor = classElement.constructors[0];
       }
     }
     return constructor;

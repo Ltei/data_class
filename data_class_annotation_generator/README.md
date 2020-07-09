@@ -1,5 +1,21 @@
 ## DataClass
 
+### How to use :
+
+Add this to your pubspec.yaml's dependency section :
+
+```yaml
+data_class_annotation: any
+```
+
+And this to the dev_dependency section :
+
+```yaml
+data_class_annotation_generator: any
+```
+
+### What it does :
+
 This library provides the @dataClass annotation, used to generate :
 * equals
 * hashCode
@@ -82,3 +98,10 @@ extension SubClassExt on SubClass {
   int get dataHashCode => (SubClass).hashCode ^ this.id.hashCode;
 }
 ```
+
+### Keep in mind :
+
+To generate the copyWith method, data_class_annotation uses the first
+constructor defined in the @dataClass annotated class.
+If you want to use a specific constructor, just annotate it with the
+@primaryConstructor annotation
