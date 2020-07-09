@@ -1,5 +1,4 @@
 class StringUtils {
-
   static String decapitalize(String str) {
     if (str.isEmpty) {
       return "";
@@ -19,5 +18,4 @@ class StringUtils {
       return str[0].toUpperCase() + str.substring(1, str.length);
     }
   }
-
 }

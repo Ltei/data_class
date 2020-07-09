@@ -8,6 +8,6 @@ class PrimaryConstructor {
 
 //
 
-const DataClass dataClass = const DataClass();
+const DataClass dataClass = DataClass();
 
-const PrimaryConstructor primaryConstructor = const PrimaryConstructor();
+const PrimaryConstructor primaryConstructor = PrimaryConstructor();

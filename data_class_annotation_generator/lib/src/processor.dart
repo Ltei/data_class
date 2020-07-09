@@ -1,27 +1,27 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:data_class/data_class.dart';
+import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:data_class_annotation_generator/src/class_element_info.dart';
-import 'package:data_class_annotation_generator/src/string_utils.dart';
 import 'package:source_gen/source_gen.dart';
 
 class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
-
   @override
-  FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
-    if (element is! ClassElement)
-      throw InvalidGenerationSourceError('The element annotated with @DataClass is not a class.', element: element);
+  FutureOr<String> generateForAnnotatedElement(
+      Element element, ConstantReader annotation, BuildStep buildStep) {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+          'The element annotated with @DataClass is not a class.',
+          element: element);
+    }
 
     final ClassElement classElement = element as ClassElement;
 
     final classElementInfo = ClassElementInfo.parse(classElement);
 
     final dataClassExtension = Code(_generateDataClass(classElementInfo));
-
 
     final library = Library((builder) => builder..body.add(dataClassExtension));
     return library.accept(DartEmitter()).toString();
@@ -37,18 +37,24 @@ class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
   }
 
   String _generateMethodCopyDataWith(ClassElementInfo classElementInfo) {
-    String paramsString = classElementInfo.fields.fold("", (acc, e) => "$acc${e.type.name} ${e.name}, ");
+    String paramsString = classElementInfo.fields
+        .fold("", (acc, e) => "$acc${e.type.name} ${e.name}, ");
     paramsString = paramsString.isEmpty ? "" : "{$paramsString}";
 
     StringBuffer constructorParamsStringBuffer = StringBuffer();
-    for (final param in classElementInfo.primaryConstructor.parameters.where((e) => e.isPositional)) {
-      constructorParamsStringBuffer..write("${param.name} ?? this.${param.name}, ");
+    for (final param in classElementInfo.primaryConstructor.parameters
+        .where((e) => e.isPositional)) {
+      constructorParamsStringBuffer
+        ..write("${param.name} ?? this.${param.name}, ");
     }
-    for (final param in classElementInfo.primaryConstructor.parameters.where((e) => e.isNamed)) {
-      constructorParamsStringBuffer..write("${param.name}: ${param.name} ?? this.${param.name}, ");
+    for (final param in classElementInfo.primaryConstructor.parameters
+        .where((e) => e.isNamed)) {
+      constructorParamsStringBuffer
+        ..write("${param.name}: ${param.name} ?? this.${param.name}, ");
     }
 
-    final code = "return ${classElementInfo.constructorCallConstString}${classElementInfo.name}${classElementInfo.constructorCallNameString}($constructorParamsStringBuffer);";
+    final code =
+        "return ${classElementInfo.constructorCallConstString}${classElementInfo.name}${classElementInfo.constructorCallNameString}($constructorParamsStringBuffer);";
 
     return "${classElementInfo.name} copyWith($paramsString) {$code}";
   }
@@ -62,8 +68,9 @@ class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
         code.write(" && ");
       }
     }
-    final fullCode =
-        code.isEmpty ? "other is ${classElementInfo.name}" : "other is ${classElementInfo.name} && ${code.toString()}";
+    final fullCode = code.isEmpty
+        ? "other is ${classElementInfo.name}"
+        : "other is ${classElementInfo.name} && ${code.toString()}";
     return "bool dataEquals(dynamic other) => $fullCode;";
   }
 

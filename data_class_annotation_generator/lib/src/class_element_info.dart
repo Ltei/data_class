@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:data_class/data_class.dart';
-import 'package:data_class_annotation_generator/src/string_utils.dart';
+import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:data_class_annotation_generator/src/type_utils.dart';
 
 class ClassElementInfo {
@@ -10,11 +9,13 @@ class ClassElementInfo {
   final List<FieldInfo> fields;
   final ConstructorElement primaryConstructor;
 
-  ClassElementInfo._(this.clazz, this.name, this.fields, this.primaryConstructor);
+  ClassElementInfo._(
+      this.clazz, this.name, this.fields, this.primaryConstructor);
 
   static ClassElementInfo parse(ClassElement clazz) {
     final name = clazz.name;
-    final fields = clazz.fields.where((e) => !e.isStatic && !e.isSynthetic).map((e) {
+    final fields =
+        clazz.fields.where((e) => !e.isStatic && !e.isSynthetic).map((e) {
       return FieldInfo(name: e.name, type: e.type);
     }).toList();
     final primaryConstructor = _getPrimaryConstructor(clazz);
@@ -22,16 +23,21 @@ class ClassElementInfo {
   }
 
   String get constructorCallConstString =>
-      primaryConstructor.parameters.isEmpty && primaryConstructor.isConst ? "const " : "";
+      primaryConstructor.parameters.isEmpty && primaryConstructor.isConst
+          ? "const "
+          : "";
 
-  String get constructorCallNameString => primaryConstructor.name != "" ? ".${primaryConstructor.name}" : "";
+  String get constructorCallNameString =>
+      primaryConstructor.name != "" ? ".${primaryConstructor.name}" : "";
 
   @override
-  String toString() => "{clazz=$clazz, name=$name, fields=$fields, primaryConstructor=$primaryConstructor}";
+  String toString() =>
+      "{clazz=$clazz, name=$name, fields=$fields, primaryConstructor=$primaryConstructor}";
 
   static ConstructorElement _getPrimaryConstructor(ClassElement classElement) {
-    ConstructorElement constructor = classElement.constructors
-        .firstWhere((e) => DartElementUtils.hasAnnotation(e, PrimaryConstructor), orElse: () => null);
+    ConstructorElement constructor = classElement.constructors.firstWhere(
+        (e) => DartElementUtils.hasAnnotation(e, PrimaryConstructor),
+        orElse: () => null);
     if (constructor == null) {
       if (classElement.constructors.length == 1) {
         constructor = classElement.constructors[0];

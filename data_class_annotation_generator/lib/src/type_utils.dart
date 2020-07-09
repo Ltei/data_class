@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:data_class/data_class.dart';
+import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 
 class DartElementUtils {
@@ -42,7 +42,8 @@ class AnnotationUtils {
   }
 
   static PrimaryConstructor getPrimaryConstructorAnnotation(Element element) {
-    final annotation = DartElementUtils.getAnnotation(element, PrimaryConstructor);
+    final annotation =
+        DartElementUtils.getAnnotation(element, PrimaryConstructor);
     return DartObjectUtils.loadPrimaryConstructor(annotation);
   }
 }
