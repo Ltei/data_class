@@ -9,7 +9,7 @@ import 'package:data_class_annotation_generator/src/class_element_info.dart';
 import 'package:data_class_annotation_generator/src/string_utils.dart';
 import 'package:source_gen/source_gen.dart';
 
-class DataClassGenerator extends GeneratorForAnnotation<DataClass> {
+class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
 
   @override
   FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
