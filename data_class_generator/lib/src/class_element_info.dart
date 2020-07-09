@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:data_class/data_class.dart';
-import 'package:data_class_generator/src/string_utils.dart';
-import 'package:data_class_generator/src/type_utils.dart';
+import 'package:data_class_annotation_generator/src/string_utils.dart';
+import 'package:data_class_annotation_generator/src/type_utils.dart';
 
 class ClassElementInfo {
   final ClassElement clazz;

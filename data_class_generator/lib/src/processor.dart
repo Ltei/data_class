@@ -5,8 +5,8 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:data_class/data_class.dart';
-import 'package:data_class_generator/src/class_element_info.dart';
-import 'package:data_class_generator/src/string_utils.dart';
+import 'package:data_class_annotation_generator/src/class_element_info.dart';
+import 'package:data_class_annotation_generator/src/string_utils.dart';
 import 'package:source_gen/source_gen.dart';
 
 class DataClassGenerator extends GeneratorForAnnotation<DataClass> {

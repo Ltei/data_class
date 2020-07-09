@@ -1,7 +1,6 @@
-name: data_class
+name: data_class_annotation
 description: Data class for Dart.
 version: 0.1.0
-author: Ltei <xavier.peltier@outlook.com>
 homepage: https://github.com/Ltei/data_class
 
 environment:
