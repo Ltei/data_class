@@ -7,13 +7,10 @@ part 'main.g.dart';
 class Model {
   final int id;
   final DateTime creationDate;
-  @DataField(adapter: DataClassListAdapter)
   final List<SubClass> subClass;
 
-  @primaryConstructor
   Model(this.id, {this.creationDate, this.subClass});
 
-  factory Model.fromJson(Map<String, dynamic> json) => $buildModelFromJson(json);
   @override int get hashCode => dataHashCode;
   @override bool operator ==(other) => dataEquals(other);
   @override String toString() => dataToString();
@@ -23,10 +20,8 @@ class Model {
 class SubClass {
   final int id;
 
-  @primaryConstructor
   SubClass(this.id);
 
-  factory SubClass.fromJson(Map<String, dynamic> json) => $buildSubClassFromJson(json);
   @override int get hashCode => dataHashCode;
   @override bool operator ==(other) => dataEquals(other);
   @override String toString() => dataToString();

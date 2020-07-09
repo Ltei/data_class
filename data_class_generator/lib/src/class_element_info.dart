@@ -15,14 +15,7 @@ class ClassElementInfo {
   static ClassElementInfo parse(ClassElement clazz) {
     final name = clazz.name;
     final fields = clazz.fields.where((e) => !e.isStatic && !e.isSynthetic).map((e) {
-//      final adapter = e.metadata.firstWhere((e) => e.computeConstantValue().say("hi"), orElse: () => null);
-      final dataFieldAnnotation = AnnotationUtils.getDataFieldAnnotation(e);
-      return FieldInfo(
-        name: e.name,
-        type: e.type,
-        serializedName: dataFieldAnnotation?.serializedName,
-        adapter: dataFieldAnnotation?.adapter,
-      );
+      return FieldInfo(name: e.name, type: e.type);
     }).toList();
     final primaryConstructor = _getPrimaryConstructor(clazz);
     return ClassElementInfo._(clazz, name, fields, primaryConstructor);
@@ -32,14 +25,6 @@ class ClassElementInfo {
       primaryConstructor.parameters.isEmpty && primaryConstructor.isConst ? "const " : "";
 
   String get constructorCallNameString => primaryConstructor.name != "" ? ".${primaryConstructor.name}" : "";
-
-  String getFieldAdapterValueName(FieldInfo field) {
-    if (field.adapter == null) {
-      return null;
-    } else {
-      return "_" + StringUtils.decapitalize(name) + StringUtils.capitalize(field.name) + "Adapter";
-    }
-  }
 
   @override
   String toString() => "{clazz=$clazz, name=$name, fields=$fields, primaryConstructor=$primaryConstructor}";
@@ -51,7 +36,8 @@ class ClassElementInfo {
       if (classElement.constructors.length == 1) {
         constructor = classElement.constructors[0];
       } else {
-        throw Exception("Couldn't determine primary constructor for class ${classElement.name}.");
+//        throw Exception("Couldn't determine primary constructor for class ${classElement.name}.");
+        constructor = classElement.constructors[0]; // TODO
       }
     }
     return constructor;
@@ -61,11 +47,9 @@ class ClassElementInfo {
 class FieldInfo {
   final String name;
   final DartType type;
-  final String serializedName;
-  final DartType adapter;
 
-  FieldInfo({this.name, this.type, this.serializedName, this.adapter});
+  FieldInfo({this.name, this.type});
 
   @override
-  String toString() => "{name=$name, type=$type, serializedName=$serializedName, adapter=$adapter}";
+  String toString() => "{name=$name, type=$type}";
 }

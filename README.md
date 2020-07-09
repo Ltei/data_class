@@ -1,17 +1,42 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+## DataClass
 
-part of 'main.dart';
+This library provides the @dataClass annotation, used to generate :
+* equals
+* hashCode
+* toString
+* copyWith
 
-// **************************************************************************
-// DataClassGenerator
-// **************************************************************************
+For example, this (main.dart) :
 
-Model $buildModelFromJson(Map<String, dynamic> json) => Model(
-      json["id"],
-      creationDate: json["creationDate"],
-      subClass: json["subClass"].map((e) => SubClass.fromJson(e)).toList(),
-    );
+```dart
+@dataClass
+class Model {
+  final int id;
+  final DateTime creationDate;
+  final List<SubClass> subClass;
 
+  Model(this.id, {this.creationDate, this.subClass});
+
+  @override int get hashCode => dataHashCode;
+  @override bool operator ==(other) => dataEquals(other);
+  @override String toString() => dataToString();
+}
+
+@dataClass
+class SubClass {
+  final int id;
+
+  SubClass(this.id);
+  
+  @override int get hashCode => dataHashCode;
+  @override bool operator ==(other) => dataEquals(other);
+  @override String toString() => dataToString();
+}
+```
+
+Will generate this (main.g.dart) :
+
+```dart
 extension ModelExt on Model {
   Model copyWith({
     int id,
@@ -24,12 +49,6 @@ extension ModelExt on Model {
       subClass: subClass ?? this.subClass,
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "id": this.id,
-        "creationDate": this.creationDate,
-        "subClass": this.subClass.map((e) => e.toJson()).toList(),
-      };
 
   bool dataEquals(dynamic other) =>
       other is Model &&
@@ -47,10 +66,6 @@ extension ModelExt on Model {
       this.subClass.hashCode;
 }
 
-SubClass $buildSubClassFromJson(Map<String, dynamic> json) => SubClass(
-      json["id"],
-    );
-
 extension SubClassExt on SubClass {
   SubClass copyWith({
     int id,
@@ -60,13 +75,10 @@ extension SubClassExt on SubClass {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": this.id,
-      };
-
   bool dataEquals(dynamic other) => other is SubClass && this.id == other.id;
 
   String dataToString() => "SubClass(id=${this.id})";
 
   int get dataHashCode => (SubClass).hashCode ^ this.id.hashCode;
 }
+```
