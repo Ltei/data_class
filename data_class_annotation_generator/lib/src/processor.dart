@@ -1,3 +1,7 @@
+// Copyright (c) 2017, Ltei. All rights reserved.
+// Use of this source code is governed by a MIT license that can be found in the
+// LICENSE file.
+
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
@@ -7,6 +11,7 @@ import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:data_class_annotation_generator/src/class_element_info.dart';
 import 'package:source_gen/source_gen.dart';
 
+/// The DataClass code generator.
 class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
   @override
   FutureOr<String> generateForAnnotatedElement(

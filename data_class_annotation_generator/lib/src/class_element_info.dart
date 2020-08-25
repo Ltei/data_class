@@ -1,8 +1,13 @@
+// Copyright (c) 2017, Ltei. All rights reserved.
+// Use of this source code is governed by a MIT license that can be found in the
+// LICENSE file.
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:data_class_annotation_generator/src/type_utils.dart';
 
+/// The loaded DataClass model.
 class ClassElementInfo {
   final ClassElement clazz;
   final String name;

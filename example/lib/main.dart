@@ -1,5 +1,9 @@
+// Copyright (c) 2017, Ltei. All rights reserved.
+// Use of this source code is governed by a MIT license that can be found in the
+// LICENSE file.
+
 import 'package:flutter/material.dart';
-import 'package:data_class/data_class.dart';
+import 'package:data_class_annotation/data_class_annotation.dart';
 
 part 'main.g.dart';
 

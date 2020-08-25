@@ -9,15 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  data_class:
-    path: ../data_class/
+  data_class_annotation:
+    path: ../data_class_annotation/
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: 1.7.4
-  data_class_generator:
-    path: ../data_class_generator/
+  build_runner: 1.10.2
+  data_class_annotation_generator:
+    path: ../data_class_annotation_generator/
 
 
 flutter:

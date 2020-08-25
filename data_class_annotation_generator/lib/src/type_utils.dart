@@ -1,8 +1,13 @@
+// Copyright (c) 2017, Ltei. All rights reserved.
+// Use of this source code is governed by a MIT license that can be found in the
+// LICENSE file.
+
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:data_class_annotation/data_class_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 
+/// Misc methods for Element manipulation.
 class DartElementUtils {
   static bool hasAnnotation(Element element, final Type type) {
     return _typeChecker(type).hasAnnotationOfExact(element);
@@ -25,6 +30,7 @@ class DartElementUtils {
   }
 }
 
+/// Misc methods for DartObject manipulation.
 class DartObjectUtils {
   static DataClass loadDataClass(DartObject object) {
     return const DataClass();
@@ -35,6 +41,7 @@ class DartObjectUtils {
   }
 }
 
+/// Misc methods for annotation Element manipulation.
 class AnnotationUtils {
   static DataClass getDataClassAnnotation(Element element) {
     final annotation = DartElementUtils.getAnnotation(element, DataClass);

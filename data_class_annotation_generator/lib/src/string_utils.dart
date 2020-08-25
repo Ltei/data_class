@@ -1,3 +1,8 @@
+// Copyright (c) 2017, Ltei. All rights reserved.
+// Use of this source code is governed by a MIT license that can be found in the
+// LICENSE file.
+
+/// Misc methods for String manipulation.
 class StringUtils {
   static String decapitalize(String str) {
     if (str.isEmpty) {
