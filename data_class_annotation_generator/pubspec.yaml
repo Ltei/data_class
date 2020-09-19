@@ -1,6 +1,6 @@
 name: data_class_annotation_generator
 description: Automatically generate equals, hashCode, toString and copyWith methods for @dataClass annotated classes.
-version: 0.1.6
+version: 0.1.7
 homepage: https://github.com/Ltei/data_class
 
 environment:
