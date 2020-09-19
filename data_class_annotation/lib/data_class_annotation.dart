@@ -5,3 +5,4 @@
 library data_class;
 
 export 'src/annotation.dart';
+export 'package:collection/collection.dart';

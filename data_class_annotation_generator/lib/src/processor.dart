@@ -68,7 +68,7 @@ class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
     final code = StringBuffer();
     for (int i = 0; i < classElementInfo.fields.length; i++) {
       final field = classElementInfo.fields[i];
-      code.write("this.${field.name} == other.${field.name}");
+      code.write("(this.${field.name} == other.${field.name} || const DeepCollectionEquality(const DefaultEquality()).equals(this.${field.name}, other.${field.name}))");
       if (i < classElementInfo.fields.length - 1) {
         code.write(" && ");
       }
