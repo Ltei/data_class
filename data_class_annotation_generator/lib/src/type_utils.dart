@@ -9,11 +9,31 @@ import 'package:source_gen/source_gen.dart';
 
 /// Misc methods for Element manipulation.
 class DartElementUtils {
-  static bool hasAnnotation(Element element, final Type type) {
+  static bool hasAnnotationOf(Element element, final Type type) {
+    return _typeChecker(type).hasAnnotationOf(element);
+  }
+
+  static DartObject getAnnotationOf(Element element, final Type type) {
+    try {
+      return _typeChecker(type).firstAnnotationOf(element);
+    } catch (e) {
+      throw Exception("Couldn't get $type annotation on $element ($e)");
+    }
+  }
+
+  static List<DartObject> getAnnotationsOf(Element element, final Type type) {
+    try {
+      return _typeChecker(type).annotationsOf(element).toList();
+    } catch (e) {
+      throw Exception("Couldn't get $type annotations on $element ($e)");
+    }
+  }
+  
+  static bool hasAnnotationOfExact(Element element, final Type type) {
     return _typeChecker(type).hasAnnotationOfExact(element);
   }
 
-  static DartObject getAnnotation(Element element, final Type type) {
+  static DartObject getAnnotationOfExact(Element element, final Type type) {
     try {
       return _typeChecker(type).firstAnnotationOfExact(element);
     } catch (e) {
@@ -21,7 +41,7 @@ class DartElementUtils {
     }
   }
 
-  static List<DartObject> getAnnotations(Element element, final Type type) {
+  static List<DartObject> getAnnotationsOfExact(Element element, final Type type) {
     try {
       return _typeChecker(type).annotationsOfExact(element).toList();
     } catch (e) {
@@ -44,13 +64,13 @@ class DartObjectUtils {
 /// Misc methods for annotation Element manipulation.
 class AnnotationUtils {
   static DataClass getDataClassAnnotation(Element element) {
-    final annotation = DartElementUtils.getAnnotation(element, DataClass);
+    final annotation = DartElementUtils.getAnnotationOfExact(element, DataClass);
     return DartObjectUtils.loadDataClass(annotation);
   }
 
   static PrimaryConstructor getPrimaryConstructorAnnotation(Element element) {
     final annotation =
-        DartElementUtils.getAnnotation(element, PrimaryConstructor);
+        DartElementUtils.getAnnotationOfExact(element, PrimaryConstructor);
     return DartObjectUtils.loadPrimaryConstructor(annotation);
   }
 }
