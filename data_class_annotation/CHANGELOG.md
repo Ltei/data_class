@@ -9,3 +9,7 @@ Update README, add CHANGELOG and clean code
 ## 0.1.2
 
 Clean code
+
+## 0.1.5
+
+Collection equality
