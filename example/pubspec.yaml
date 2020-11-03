@@ -15,7 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: 1.10.1
+  build_runner: 1.10.4
   data_class_annotation_generator:
     path: ../data_class_annotation_generator/
 

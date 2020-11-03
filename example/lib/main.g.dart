@@ -24,11 +24,11 @@ extension ModelExt on Model {
       (this.id == other.id ||
           const DeepCollectionEquality(const DefaultEquality())
               .equals(this.id, other.id)) &&
-      (const DateOnlyEquality().equals(this.creationDate, other.creationDate) ||
-          const DeepCollectionEquality(const DateOnlyEquality())
+      (this.creationDate == other.creationDate ||
+          const DeepCollectionEquality(const DefaultEquality())
               .equals(this.creationDate, other.creationDate)) &&
-      (const SubClassEquality().equals(this.subClass, other.subClass) ||
-          const DeepCollectionEquality(const SubClassEquality())
+      (this.subClass == other.subClass ||
+          const DeepCollectionEquality(const DefaultEquality())
               .equals(this.subClass, other.subClass));
 
   String dataToString() =>

@@ -12,12 +12,14 @@ Clean code
 
 ## 0.1.5
 
-Collection equality
+Fix Collection equality
 
 ## 0.1.6
 
-Custom equality
+Added Custom equality
 
-## 0.1.7
+## 0.1.8
 
-.
+Bump dependencies versions
+Added parameters to chose which method to generate
+Fix issue with extended classes

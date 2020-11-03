@@ -4,7 +4,17 @@
 
 /// An annotation used to specify a class to generate code for.
 class DataClass {
-  const DataClass();
+  final bool generateCopyWith;
+  final bool generateDataToString;
+  final bool generateDataHashCode;
+  final bool generateDataEquals;
+
+  const DataClass({
+    this.generateCopyWith = true,
+    this.generateDataToString = true,
+    this.generateDataHashCode = true,
+    this.generateDataEquals = true,
+  });
 }
 
 /// An annotation used to specify the data class primary constructor.

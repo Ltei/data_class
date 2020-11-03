@@ -14,12 +14,9 @@ import 'package:source_gen/source_gen.dart';
 /// The DataClass code generator.
 class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
   @override
-  FutureOr<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
+  FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
     if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-          'The element annotated with @DataClass is not a class.',
-          element: element);
+      throw InvalidGenerationSourceError('The element annotated with @DataClass is not a class.', element: element);
     }
 
     final ClassElement classElement = element as ClassElement;
@@ -33,29 +30,30 @@ class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
   }
 
   String _generateDataClass(ClassElementInfo classElementInfo) {
-    return "extension ${classElementInfo.name}Ext on ${classElementInfo.name} {\n"
-        "${_generateMethodCopyDataWith(classElementInfo)} \n\n"
-        "${_generateMethodEqualsData(classElementInfo)} \n\n"
-        "${_generateMethodToStringData(classElementInfo)} \n\n"
-        "int get dataHashCode => ${_generateHashCodeExpr(classElementInfo)}; \n"
-        "}";
+    final result = StringBuffer();
+    result.write('extension ${classElementInfo.name}Ext on ${classElementInfo.name} {\n');
+    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+      result.write('${_generateMethodCopyWith(classElementInfo)} \n\n');
+    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+      result.write('${_generateMethodEqualsData(classElementInfo)} \n\n');
+    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+      result.write('${_generateMethodToStringData(classElementInfo)} \n\n');
+    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+      result.write('int get dataHashCode => ${_generateHashCodeExpr(classElementInfo)}; \n');
+    result.write('}');
+    return result.toString();
   }
 
-  String _generateMethodCopyDataWith(ClassElementInfo classElementInfo) {
-    String paramsString = classElementInfo.fields
-        .fold("", (acc, e) => "$acc${e.type.name} ${e.name}, ");
+  String _generateMethodCopyWith(ClassElementInfo classElementInfo) {
+    String paramsString = classElementInfo.fields.fold("", (acc, e) => "$acc${e.type.name} ${e.name}, ");
     paramsString = paramsString.isEmpty ? "" : "{$paramsString}";
 
     StringBuffer constructorParamsStringBuffer = StringBuffer();
-    for (final param in classElementInfo.primaryConstructor.parameters
-        .where((e) => e.isPositional)) {
-      constructorParamsStringBuffer
-        ..write("${param.name} ?? this.${param.name}, ");
+    for (final param in classElementInfo.primaryConstructor.parameters.where((e) => e.isPositional)) {
+      constructorParamsStringBuffer..write("${param.name} ?? this.${param.name}, ");
     }
-    for (final param in classElementInfo.primaryConstructor.parameters
-        .where((e) => e.isNamed)) {
-      constructorParamsStringBuffer
-        ..write("${param.name}: ${param.name} ?? this.${param.name}, ");
+    for (final param in classElementInfo.primaryConstructor.parameters.where((e) => e.isNamed)) {
+      constructorParamsStringBuffer..write("${param.name}: ${param.name} ?? this.${param.name}, ");
     }
 
     final code =
@@ -69,18 +67,19 @@ class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
     for (int i = 0; i < classElementInfo.fields.length; i++) {
       final field = classElementInfo.fields[i];
       if (field.customEqualityType == null) {
-        code.write("(this.${field.name} == other.${field.name} || const DeepCollectionEquality(const DefaultEquality()).equals(this.${field.name}, other.${field.name}))");
+        code.write(
+            "(this.${field.name} == other.${field.name} || const DeepCollectionEquality(const DefaultEquality()).equals(this.${field.name}, other.${field.name}))");
       } else {
         final eqTypeName = field.customEqualityType.name;
-        code.write("(const $eqTypeName().equals(this.${field.name}, other.${field.name}) || const DeepCollectionEquality(const $eqTypeName()).equals(this.${field.name}, other.${field.name}))");
+        code.write(
+            "(const $eqTypeName().equals(this.${field.name}, other.${field.name}) || const DeepCollectionEquality(const $eqTypeName()).equals(this.${field.name}, other.${field.name}))");
       }
       if (i < classElementInfo.fields.length - 1) {
         code.write(" && ");
       }
     }
-    final fullCode = code.isEmpty
-        ? "other is ${classElementInfo.name}"
-        : "other is ${classElementInfo.name} && ${code.toString()}";
+    final fullCode =
+        code.isEmpty ? "other is ${classElementInfo.name}" : "other is ${classElementInfo.name} && ${code.toString()}";
     return "bool dataEquals(dynamic other) => $fullCode;";
   }
 

@@ -10,20 +10,22 @@ import 'package:data_class_annotation_generator/src/type_utils.dart';
 /// The loaded DataClass model.
 class ClassElementInfo {
   final ClassElement clazz;
+  final DataClass dataClassAnnotation;
   final String name;
   final List<FieldInfo> fields;
   final ConstructorElement primaryConstructor;
 
-  ClassElementInfo._(this.clazz, this.name, this.fields, this.primaryConstructor);
+  ClassElementInfo._(this.clazz, this.dataClassAnnotation, this.name, this.fields, this.primaryConstructor);
 
   static ClassElementInfo parse(ClassElement clazz) {
     final name = clazz.name;
-    final fields = clazz.fields.where((e) => !e.isStatic && !e.isSynthetic).map((e) {
+    final dataClassAnnotation = AnnotationUtils.getDataClassAnnotation(clazz);
+    final primaryConstructor = _getPrimaryConstructor(clazz);
+    final fields = primaryConstructor.parameters.map((e) {
       final customEquality = DartElementUtils.hasAnnotationOf(e, Equality) ? DartElementUtils.getAnnotationOf(e, Equality) : null;
       return FieldInfo(name: e.name, type: e.type, customEqualityType: customEquality?.type);
     }).toList();
-    final primaryConstructor = _getPrimaryConstructor(clazz);
-    return ClassElementInfo._(clazz, name, fields, primaryConstructor);
+    return ClassElementInfo._(clazz, dataClassAnnotation, name, fields, primaryConstructor);
   }
 
   String get constructorCallConstString =>

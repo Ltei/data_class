@@ -53,7 +53,12 @@ class DartElementUtils {
 /// Misc methods for DartObject manipulation.
 class DartObjectUtils {
   static DataClass loadDataClass(DartObject object) {
-    return const DataClass();
+    return DataClass(
+      generateCopyWith: object.getField('generateCopyWith').toBoolValue(),
+      generateDataToString: object.getField('generateDataToString').toBoolValue(),
+      generateDataHashCode: object.getField('generateDataHashCode').toBoolValue(),
+      generateDataEquals: object.getField('generateDataEquals').toBoolValue(),
+    );
   }
 
   static PrimaryConstructor loadPrimaryConstructor(DartObject object) {

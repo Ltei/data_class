@@ -1,6 +1,6 @@
 name: data_class_annotation
 description: This library provides the @dataClass annotation, used to generate code via the data_class_annotation_generator package.
-version: 0.1.7
+version: 0.1.8
 homepage: https://github.com/Ltei/data_class
 
 environment:
@@ -8,6 +8,3 @@ environment:
 
 dependencies:
   collection: ^1.14.13
-
-dev_dependencies:
-  test: 1.3.4
