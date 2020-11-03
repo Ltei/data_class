@@ -27,3 +27,7 @@ Custom equality
 Bump dependencies versions
 Added parameters to chose which method to generate
 Fix issue with extended classes
+
+## 0.1.9
+
+Fix generation options
