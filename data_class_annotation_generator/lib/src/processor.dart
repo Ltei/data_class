@@ -34,11 +34,11 @@ class DataClassProcessor extends GeneratorForAnnotation<DataClass> {
     result.write('extension ${classElementInfo.name}Ext on ${classElementInfo.name} {\n');
     if (classElementInfo.dataClassAnnotation.generateCopyWith)
       result.write('${_generateMethodCopyWith(classElementInfo)} \n\n');
-    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+    if (classElementInfo.dataClassAnnotation.generateDataEquals)
       result.write('${_generateMethodEqualsData(classElementInfo)} \n\n');
-    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+    if (classElementInfo.dataClassAnnotation.generateDataToString)
       result.write('${_generateMethodToStringData(classElementInfo)} \n\n');
-    if (classElementInfo.dataClassAnnotation.generateCopyWith)
+    if (classElementInfo.dataClassAnnotation.generateDataHashCode)
       result.write('int get dataHashCode => ${_generateHashCodeExpr(classElementInfo)}; \n');
     result.write('}');
     return result.toString();
