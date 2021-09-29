@@ -12,7 +12,7 @@ dependencies:
   build_config: '>=0.2.6 <0.5.0'
 
   meta: ^1.1.0
-  source_gen: ^0.9.6
+  source_gen: ^1.0.0
   code_builder: ^3.4.1
 
   data_class_annotation: ^0.1.8
